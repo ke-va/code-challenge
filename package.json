@@ -5,7 +5,7 @@
   "scripts": {
     "start": "ts-node-dev -r dotenv/config src/task.ts",
     "start:process": "ts-node-dev process.ts",
-    "test": "jest"
+    "test": "jest --setupFiles dotenv/config"
   },
   "author": "",
   "license": "ISC",

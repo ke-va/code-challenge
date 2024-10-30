@@ -4,8 +4,7 @@ import axios from 'axios';
 import crypto from 'crypto';
 import parse from 'node-html-parser';
 
-// * Load environment variables
-const IM_SECRET = process.env.IM_SECRET || '';
+const IM_SECRET = process.env.IM_SECRET;
 const URL_REGEX = /https?:\/\/[^\s]+/g;
 
 export type ResultType = {
@@ -20,7 +19,7 @@ export type ResultType = {
  * Computes a SHA-256 hash of the given data using a secret.
  */
 export function sha256(data: string): string {
-    return crypto.createHmac('sha256', IM_SECRET).update(data).digest('hex');
+    return crypto.createHmac('sha256', IM_SECRET!).update(data).digest('hex');
 }
 
 /**
@@ -149,7 +148,6 @@ async function main() {
         }
 
         const urls = parseFile(content);
-        console.log('urls', urls)
 
         if (urls) {
             for (const url of urls) {

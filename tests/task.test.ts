@@ -2,17 +2,18 @@ import fs from 'fs-extra';
 import axios from 'axios';
 import crypto from 'crypto';
 import { extractLastUrl, fetchPageContent, parseFile, sha256 } from '../src/task';
+import 'dotenv/config';
 
 jest.mock('fs-extra');
 jest.mock('axios');
 
-// Mock Environment Variables
-const IM_SECRET = process.env.IM_SECRET || '';
+const IM_SECRET = process.env.IM_SECRET;
 
 describe('Utility Functions', () => {
     describe('sha256', () => {
         it('should return the correct SHA-256 hash of the given data', () => {
             const data = 'test-data';
+            console.log('im secret', IM_SECRET)
             const expectedHash = crypto.createHmac('sha256', IM_SECRET).update(data).digest('hex');
             expect(sha256(data)).toEqual(expectedHash);
         });
