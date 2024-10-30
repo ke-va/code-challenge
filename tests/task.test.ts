@@ -7,15 +7,13 @@ jest.mock('fs-extra');
 jest.mock('axios');
 
 // Mock Environment Variables
-process.env.IM_SECRET = 'test-secret';
+const IM_SECRET = process.env.IM_SECRET || '';
 
 describe('Utility Functions', () => {
     describe('sha256', () => {
         it('should return the correct SHA-256 hash of the given data', () => {
             const data = 'test-data';
-            const expectedHash = crypto.createHmac('sha256', process.env.IM_SECRET + '').update(data).digest('hex');
-            console.log('expectedHash', expectedHash)
-            console.log(sha256(data))
+            const expectedHash = crypto.createHmac('sha256', IM_SECRET).update(data).digest('hex');
             expect(sha256(data)).toEqual(expectedHash);
         });
     });
@@ -65,22 +63,6 @@ describe('URL Processing Functions', () => {
         jest.clearAllMocks();
     });
 
-    // describe('retryRequest', () => {
-    //     it('should retry fetching the URL after a delay if the first attempt fails', async () => {
-    //         jest.useFakeTimers();
-    //         const mockUrl = 'http://example.com';
-    //         const retrySpy = jest.spyOn(global, 'setTimeout');
-    //         (axios.get as jest.Mock).mockRejectedValueOnce(new Error('Network error')).mockResolvedValue({ data: '<html><title>Retry Test</title></html>' });
-
-    //         await retryRequest(mockUrl);
-
-    //         expect(retrySpy).toHaveBeenCalledWith(expect.any(Function), 60000);
-    //         jest.runAllTimers();
-
-    //         expect(axios.get).toHaveBeenCalledWith(mockUrl);
-    //     });
-    // });
-
     describe('fetchPageContent', () => {
         it('should log page title and hashed email if present', async () => {
             const mockUrl = 'http://example.com';
@@ -110,28 +92,3 @@ describe('URL Processing Functions', () => {
         });
     });
 });
-
-
-// // import { parseFile, parseUrls } from '../src/parseFile';
-// import fs from 'fs-extra';
-// import path from 'path';
-// import { parseFile } from '../src/task';
-
-// jest.mock('fs-extra');
-
-// describe('parseFile', () => {
-//   it('should read a file and extract URLs within brackets', () => {
-//     const testContent = '[https://example.com] some text [http://another.com]';
-//     const filePath = 'test.txt';
-//     (fs.readFileSync as jest.Mock).mockReturnValue(testContent);
-
-//     const result = parseFile(filePath);
-//     expect(result).toEqual(['https://example.com', 'http://another.com']);
-//   });
-
-//   it('should handle empty files gracefully', () => {
-//     (fs.readFileSync as jest.Mock).mockReturnValue('');
-//     const result = parseFile('empty.txt');
-//     expect(result).toEqual([]);
-//   });
-// });

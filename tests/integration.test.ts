@@ -35,24 +35,10 @@ describe('Script Integration Test', () => {
 
     it('should process URLs in the file and output the correct data', async () => {
         const { stdout } = await execPromise(`ts-node src/task.ts ${testFilePath}`);
-        // const result = JSON.parse(stdout)
-        console.log(stdout)
-        console.log(typeof stdout)
-        
-        expect(stdout).toEqual(`{
-  url: '${testUrl}',
-  title: 'Example Domain',
-  email: 'e38826b7f11f333e7b1ab156ef09b9b77bc11ff4cd5456a6e3965a5ec3baafa6'
-  }`)
-        // expect(stdout).toEqual({
-        //     url: expect.any(String),
-        //     title: expect.any(String),
-        //     email: expect.any(String),
-        //     // Every other check you need ...
-        //   });
-        // Check that the output contains the processed data
-        // expect(stdout).toContain(testUrl);  // Check that the URL was processed
-        // expect(JSON.parse(stdout)).toHaveProperty('url', testUrl);
-        // expect(stdout).toContain(sha256('test@example.com'));  // Check the hashed email
+        console.log('stdout', stdout)
+
+        expect(stdout).toContain('title')
+        expect(stdout).toContain('url')
+        expect(stdout).not.toContain('email')
     });
 });

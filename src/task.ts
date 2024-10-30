@@ -10,8 +10,8 @@ const URL_REGEX = /https?:\/\/[^\s]+/g;
 
 export type ResultType = {
     url: string;
-    title: string;
-    email: string;
+    title?: string;
+    email?: string;
 };
 
 // Utility functions
@@ -80,6 +80,9 @@ export function parseFile(filePath: string): string[] | undefined {
  * Fetches and logs the page title and hashed email from the URL content.
  */
 export async function fetchPageContent(url: string): Promise<void> {
+    let res: ResultType = {
+        url: ''
+    }
     try {
         const { data } = await axios.get(url);
         const result = parse(data);
@@ -87,11 +90,14 @@ export async function fetchPageContent(url: string): Promise<void> {
         const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/;
         const firstEmail = (result.text.match(emailRegex) || [])[0];
 
-        const res: ResultType = {
-            url,
-            title: pageTitle || '',
-            email: sha256(firstEmail + '') ? sha256(firstEmail + '') : '' 
-        };
+        // Set default values for url and title
+        res.url = url;
+        res.title = pageTitle || '';
+
+        if (firstEmail) {
+            // Set email only if firstEmail exists
+            res.email = sha256(firstEmail);
+        }
 
         console.log(res);
     } catch (error) {
