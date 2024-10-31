@@ -8,8 +8,10 @@
   - [Setup](#setup)
     - [Clone repository](#clone-repository)
     - [Setup environment](#setup-environment)
-    - [Build instructions](#build-instructions)
-    - [Start](#start)
+    - [Installation](#installation)
+    - [Running the app with argument](#running-the-app-with-argument)
+    - [Running the app without argument](#running-the-app-without-argument)
+    - [Running tests](#running-tests)
 
 ## Description
 
