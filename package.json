@@ -1,7 +1,10 @@
 {
-  "name": "ingemark",
+  "name": "code-challenge",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "23.0.0"
+  },
   "scripts": {
     "start": "ts-node-dev -r dotenv/config src/task.ts",
     "test": "jest --setupFiles dotenv/config"

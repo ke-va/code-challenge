@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
 import { promisify } from 'util';
-import { sha256 } from '../src/task';
 
 const execPromise = promisify(exec);
 
