@@ -46,7 +46,7 @@ export function parseFile(filePath: string): string[] | undefined {
         return;
     }
 
-    const results: string[] = [];
+    const urls: string[] = [];
     let insideBrackets = false;
     let escapeNextChar = false;
     let bracketContent = '';
@@ -65,14 +65,17 @@ export function parseFile(filePath: string): string[] | undefined {
             if (openBracketCount === 0) {
                 insideBrackets = false;
                 const lastUrl = extractLastUrl(bracketContent);
-                if (lastUrl) results.push(lastUrl);
+                if (lastUrl) urls.push(lastUrl);
             }
         } else if (insideBrackets) {
             bracketContent += char;
         }
     }
 
-    return results;
+    
+    const result = urls.filter((url, index) => urls.indexOf(url) === index)
+    
+    return result;
 }
 
 /**
